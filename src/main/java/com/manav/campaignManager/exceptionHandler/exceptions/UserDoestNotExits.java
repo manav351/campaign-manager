@@ -1,4 +1,4 @@
-package com.manav.campaignManager.exceptionHandlers.exceptions;
+package com.manav.campaignManager.exceptionHandler.exceptions;
 
 public class UserDoestNotExits extends RuntimeException{
     public UserDoestNotExits(String message) {
