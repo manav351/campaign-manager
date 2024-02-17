@@ -1,0 +1,52 @@
+CREATE DATABASE IF NOT EXISTS `campaign_manager`;
+USE `campaign_manager`;
+
+DROP TABLE IF EXISTS `campaign_target_audience`;
+DROP TABLE IF EXISTS `campaigns`;
+DROP TABLE IF EXISTS `email`;
+DROP TABLE IF EXISTS `audience_details`;
+DROP TABLE IF EXISTS `user_details`;
+
+CREATE TABLE `user_details` (
+	`user_id` INT PRIMARY KEY AUTO_INCREMENT,
+    `first_name` VARCHAR(50) NOT NULL,
+    `last_name` VARCHAR(50) DEFAULT NULL,
+    `email_id` VARCHAR(50) NOT NULL,
+    `registration_time` VARCHAR(50) NOT NULL,
+    `password` VARCHAR(100) NOT NULL
+) ENGINE=InnoDB auto_increment=1 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `audience_details` (
+	`audience_id` INT PRIMARY KEY AUTO_INCREMENT,
+    `first_name` VARCHAR(50) DEFAULT NULL,
+    `last_name` VARCHAR(50) DEFAULT NULL,
+    `email_id` VARCHAR(50) NOT NULL
+) ENGINE=InnoDB auto_increment=1 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `email` (
+	`notification_id` INT PRIMARY KEY AUTO_INCREMENT,
+    `sent_time` VARCHAR(50) NOT NULL,
+    `subject` VARCHAR(50) DEFAULT NULL,
+    `body`TEXT NOT NULL,
+    `user_id` INT NOT NULL,
+    `audience_id` INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user_details(`user_id`),
+    FOREIGN KEY (audience_id) REFERENCES audience_details(`audience_id`)
+) ENGINE=InnoDB auto_increment=1 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `campaigns` (
+	campaign_id INT AUTO_INCREMENT PRIMARY KEY,
+    campaign_name VARCHAR(255) NOT NULL,
+    subject VARCHAR(255) NOT NULL,
+    body TEXT NOT NULL,
+    status VARCHAR(20) NOT NULL,
+    created_by INT NOT NULL,
+    creation_time VARCHAR(50) NOT NULL,
+    FOREIGN KEY (created_by) REFERENCES user_details(`user_id`)
+) ENGINE=InnoDB auto_increment=1 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `campaign_target_audience` (
+	campaign_id INT NOT NULL,
+    target_email VARCHAR(100) NOT NULL,
+    FOREIGN KEY (campaign_id) REFERENCES campaigns (campaign_id)
+) ENGINE=InnoDB auto_increment=1 DEFAULT CHARSET=latin1;
