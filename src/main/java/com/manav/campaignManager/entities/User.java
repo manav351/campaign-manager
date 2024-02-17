@@ -35,14 +35,7 @@ public class User {
     @Column(name = "registration_time")
     private String registrationTime;
 
-
-    public User(User targetUser) {
-        this.userId = targetUser.userId;
-        this.emailId = targetUser.emailId;
-        this.firstName = targetUser.firstName;
-        this.lastName = targetUser.lastName;
-        this.registrationTime = targetUser.registrationTime;
-    }
-
+    @Column(name = "password")
+    private String password;
 }
 

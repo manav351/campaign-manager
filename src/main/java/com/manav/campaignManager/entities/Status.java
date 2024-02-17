@@ -1,4 +1,4 @@
-package com.springBoot.AutomatedEmailApplication.entities;
+package com.manav.campaignManager.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
