@@ -1,6 +1,6 @@
-package com.manav.campaignManager.repositories;
+package com.manav.campaignManager.repository;
 
-import com.manav.campaignManager.entities.Email;
+import com.manav.campaignManager.entity.Email;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
