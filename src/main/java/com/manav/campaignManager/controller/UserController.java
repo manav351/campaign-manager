@@ -1,17 +1,15 @@
 package com.manav.campaignManager.controller;
 
 
-import com.manav.campaignManager.entities.GenericResponse;
-import com.manav.campaignManager.entities.Status;
-import com.manav.campaignManager.entities.User;
-import com.manav.campaignManager.exceptionHandlers.exceptions.InvalidUserRequest;
-import com.manav.campaignManager.services.UserService;
+import com.manav.campaignManager.entity.GenericResponse;
+import com.manav.campaignManager.entity.Status;
+import com.manav.campaignManager.entity.User;
+import com.manav.campaignManager.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
-import java.util.List;
 
 @RestController
 @RequestMapping("/user")

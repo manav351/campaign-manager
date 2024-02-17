@@ -1,4 +1,4 @@
-package com.manav.campaignManager.entities;
+package com.manav.campaignManager.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

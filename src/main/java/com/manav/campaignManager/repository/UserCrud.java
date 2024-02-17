@@ -1,6 +1,6 @@
-package com.manav.campaignManager.repositories;
+package com.manav.campaignManager.repository;
 
-import com.manav.campaignManager.entities.User;
+import com.manav.campaignManager.entity.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
