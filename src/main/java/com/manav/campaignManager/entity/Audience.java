@@ -1,6 +1,5 @@
-package com.manav.campaignManager.entities;
+package com.manav.campaignManager.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,7 +16,7 @@ public class Audience {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "audience_id")
-    Integer audience_id;
+    Integer audienceId;
 
     @Column(name = "email_id")
     String emailId;
@@ -27,4 +26,10 @@ public class Audience {
 
     @Column(name = "last_name")
     private String lastName;
+
+    public Audience(Audience targetAudience) {
+        this.emailId = targetAudience.emailId;
+        this.firstName = targetAudience.firstName;
+        this.lastName = targetAudience.lastName;
+    }
 }

@@ -1,4 +1,4 @@
-package com.manav.campaignManager.entities;
+package com.manav.campaignManager.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;

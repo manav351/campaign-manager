@@ -1,4 +1,4 @@
-package com.manav.campaignManager.entities;
+package com.manav.campaignManager.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,7 +27,7 @@ public class Email {
     @Column( name = "body", columnDefinition = "TEXT")
     private String body;
 
-    @Column( name = "body", columnDefinition = "TEXT")
+    @Column( name = "user_id")
     private Integer userId;
 
     @ManyToOne(fetch = FetchType.EAGER)
