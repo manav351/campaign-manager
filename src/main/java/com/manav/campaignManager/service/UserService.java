@@ -1,14 +1,13 @@
-package com.manav.campaignManager.services;
+package com.manav.campaignManager.service;
 
-import com.manav.campaignManager.exceptionHandlers.exceptions.*;
-import com.manav.campaignManager.repositories.UserCrud;
+import com.manav.campaignManager.exceptionHandler.exceptions.*;
+import com.manav.campaignManager.repository.UserCrud;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-import com.manav.campaignManager.entities.User;
+import com.manav.campaignManager.entity.User;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
