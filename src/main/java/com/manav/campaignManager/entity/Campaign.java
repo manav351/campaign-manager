@@ -49,6 +49,9 @@ public class Campaign {
     @Column(nullable = false, name = "creation_time")
     private String creationTime;
     
-    @Column(nullable = false, name = "is_scheduled")
+    @Column(name = "is_scheduled")
     private Boolean isScheduled;
+
+    @Column(name = "sent_count")
+    private Integer sentCount;
 }
