@@ -5,7 +5,7 @@ import com.manav.campaignManager.entity.Status;
 import com.manav.campaignManager.entity.User;
 import com.manav.campaignManager.exceptionHandler.exceptions.InvalidUserRequest;
 import com.manav.campaignManager.exceptionHandler.exceptions.UserAlreadyExists;
-import com.manav.campaignManager.exceptionHandler.exceptions.UserDoestNotExits;
+import com.manav.campaignManager.exceptionHandler.exceptions.UserDoestNotExist;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -45,7 +45,7 @@ public class UserExecutionHandler {
     }
     
     @ExceptionHandler
-    public ResponseEntity<GenericResponse<User>> handleException(UserDoestNotExits exc){
+    public ResponseEntity<GenericResponse<User>> handleException(UserDoestNotExist exc){
         return new ResponseEntity<>(
                 GenericResponse.<User>builder()
                         .status(Status.builder()

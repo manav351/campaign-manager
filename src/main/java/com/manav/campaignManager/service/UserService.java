@@ -1,9 +1,12 @@
 package com.manav.campaignManager.service;
 
+import ch.qos.logback.classic.encoder.JsonEncoder;
 import com.manav.campaignManager.dto.UserDTO;
 import com.manav.campaignManager.exceptionHandler.exceptions.*;
 import com.manav.campaignManager.repository.UserCrud;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.manav.campaignManager.entity.User;
 
@@ -13,13 +16,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class UserService {
     
     private final UserCrud userJPA;
-    
-    UserService(final UserCrud userJPA ){
-        this.userJPA = userJPA;
-    }
+    private final PasswordEncoder passwordEncoder;
     
     public List<User> getAllUsers() {
         return (List<User>) userJPA.findAll();
@@ -45,12 +46,6 @@ public class UserService {
             throw new UserAlreadyExists("Email Id is already registered to another user");
         }
 
-        if( user.getRegistrationTime() == null || user.getRegistrationTime().isEmpty())
-            user.setRegistrationTime(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
-
-        if( user.getUserRole() == null || user.getUserRole().isEmpty() )
-            user.setUserRole("viewer");
-
         return true;
     }
 
@@ -58,6 +53,15 @@ public class UserService {
     public User addUser(User newUser) {
         if(!validateUserPayloadForAdd(newUser))
             return null;
+
+        if( newUser.getRegistrationTime() == null || newUser.getRegistrationTime().isEmpty())
+            newUser.setRegistrationTime(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
+
+        if( newUser.getUserRole() == null || newUser.getUserRole().isEmpty() )
+            newUser.setUserRole("viewer");
+
+        newUser.setPassword( passwordEncoder.encode( newUser.getPassword() ) );
+
         return userJPA.save(newUser);
     }
     
