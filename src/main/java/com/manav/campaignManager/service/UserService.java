@@ -1,8 +1,12 @@
 package com.manav.campaignManager.service;
 
+import ch.qos.logback.classic.encoder.JsonEncoder;
+import com.manav.campaignManager.dto.UserDTO;
 import com.manav.campaignManager.exceptionHandler.exceptions.*;
 import com.manav.campaignManager.repository.UserCrud;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.manav.campaignManager.entity.User;
 
@@ -12,13 +16,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class UserService {
     
     private final UserCrud userJPA;
-    
-    UserService(final UserCrud userJPA ){
-        this.userJPA = userJPA;
-    }
+    private final PasswordEncoder passwordEncoder;
     
     public List<User> getAllUsers() {
         return (List<User>) userJPA.findAll();
@@ -44,9 +46,6 @@ public class UserService {
             throw new UserAlreadyExists("Email Id is already registered to another user");
         }
 
-        if( user.getRegistrationTime() == null || user.getRegistrationTime().isEmpty())
-            user.setRegistrationTime(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
-
         return true;
     }
 
@@ -54,8 +53,16 @@ public class UserService {
     public User addUser(User newUser) {
         if(!validateUserPayloadForAdd(newUser))
             return null;
-        User updatedUser = userJPA.save(newUser);
-        return updatedUser;
+
+        if( newUser.getRegistrationTime() == null || newUser.getRegistrationTime().isEmpty())
+            newUser.setRegistrationTime(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
+
+        if( newUser.getUserRole() == null || newUser.getUserRole().isEmpty() )
+            newUser.setUserRole("viewer");
+
+        newUser.setPassword( passwordEncoder.encode( newUser.getPassword() ) );
+
+        return userJPA.save(newUser);
     }
     
     public User findUserById(Integer user_id){
@@ -70,5 +77,17 @@ public class UserService {
             throw new InvalidUserRequest("Please enter a valid Email Id");
         
         return userJPA.findByEmailId( emailId ).orElse(null);
+    }
+
+    public UserDTO convertToDTO(User user) {
+        if( user == null )
+            return null;
+        return UserDTO.builder()
+                .userId( user.getUserId() )
+                .firstName( user.getFirstName() )
+                .lastName( user.getLastName() )
+                .emailId( user.getEmailId() )
+                .userRole( user.getUserRole() )
+                .build();
     }
 }

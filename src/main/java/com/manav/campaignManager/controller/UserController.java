@@ -1,6 +1,7 @@
 package com.manav.campaignManager.controller;
 
 
+import com.manav.campaignManager.dto.UserDTO;
 import com.manav.campaignManager.entity.GenericResponse;
 import com.manav.campaignManager.entity.Status;
 import com.manav.campaignManager.entity.User;
@@ -51,33 +52,36 @@ public class UserController {
 //    }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GenericResponse<User>> findUserById(@PathVariable Integer id){
+    public ResponseEntity<GenericResponse<UserDTO>> findUserById(@PathVariable Integer id){
         User user = serviceObj.findUserById(id);
+        UserDTO returnableUser = serviceObj.convertToDTO(user);
 
-        GenericResponse<User> response =  GenericResponse.<User>builder()
+        GenericResponse<UserDTO> response =  GenericResponse.<UserDTO>builder()
                 .status(Status.builder()
                         .status(true)
                         .message("Operation Successful")
                         .error("")
                         .build()
                 )
-                .data(user == null ? Collections.emptyList() : Collections.singletonList(user))
+                .data(returnableUser == null ? Collections.emptyList() : Collections.singletonList(returnableUser))
                 .build();
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<GenericResponse<User>> addUser(@RequestBody User newUser){
+    public ResponseEntity<GenericResponse<UserDTO>> addUser(@RequestBody User newUser){
         User updatedUser = serviceObj.addUser(newUser);
-        GenericResponse<User> response =  GenericResponse.<User>builder()
+        UserDTO returnableUser = serviceObj.convertToDTO(updatedUser);
+
+        GenericResponse<UserDTO> response =  GenericResponse.<UserDTO>builder()
                 .status(Status.builder()
                         .status(true)
                         .message("Operation Successful")
                         .error("")
                         .build()
                 )
-                .data(updatedUser == null ? Collections.emptyList() : Collections.singletonList(updatedUser))
+                .data(returnableUser == null ? Collections.emptyList() : Collections.singletonList(returnableUser))
                 .build();
 
         return new ResponseEntity<>(response, HttpStatus.OK);

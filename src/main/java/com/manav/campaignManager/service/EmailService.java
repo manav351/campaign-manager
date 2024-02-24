@@ -2,11 +2,9 @@ package com.manav.campaignManager.service;
 
 import com.manav.campaignManager.entity.Audience;
 import com.manav.campaignManager.entity.Email;
-import com.manav.campaignManager.entity.User;
 import com.manav.campaignManager.exceptionHandler.exceptions.AudienceDoesNotExists;
 import com.manav.campaignManager.exceptionHandler.exceptions.FailedToSendEmail;
 import com.manav.campaignManager.exceptionHandler.exceptions.InvalidEmailRequest;
-import com.manav.campaignManager.exceptionHandler.exceptions.UserDoestNotExits;
 import com.manav.campaignManager.repository.AudienceCrud;
 import com.manav.campaignManager.repository.EmailCrud;
 import lombok.AllArgsConstructor;
@@ -29,8 +27,6 @@ public class EmailService {
     final private EmailCrud emailCrud;
 
     final private UserService userService;
-
-    final private AudienceCrud audienceCrud;
 
     final private AudienceService audienceService;
 
