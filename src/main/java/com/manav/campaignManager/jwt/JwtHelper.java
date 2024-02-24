@@ -17,7 +17,7 @@ public class JwtHelper {
     //requirement :
     public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60; // this is 5hr * 60min * 60 seconds
 
-    private final String secret = "afafasfafafasfasfasfafacasdasfasxASFACASDFACASDFASFASFDAFASFASDAADSCSDFADCVSGCFVADXCcadwavfsfarvf";
+    private final String secret = "ThisisasecretkeyforcampaignmanagerauthenticationusingJWTAuthenticatorandSpringbootstartersecurity";
 
     //retrieve username from jwt token
     public String getUsernameFromToken(String token) {

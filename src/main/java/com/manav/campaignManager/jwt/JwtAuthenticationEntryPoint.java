@@ -1,5 +1,7 @@
 package com.manav.campaignManager.jwt;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.manav.campaignManager.entity.GenericResponse;
 import com.manav.campaignManager.entity.Status;
 import com.manav.campaignManager.entity.User;
@@ -16,7 +18,7 @@ import java.io.PrintWriter;
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
         // Create your custom response here
@@ -32,7 +34,11 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
         // Set the response body and status
         response.setContentType("application/json"); // Assuming you want JSON response
         PrintWriter writer = response.getWriter();
-        writer.println(customResponse); // Serialize your custom response object
+
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        String json = ow.writeValueAsString(customResponse);
+
+        writer.println(json); // Serialize your custom response object
 
         // Optionally, you can set additional headers if needed
         // response.setHeader("Custom-Header", "foo");
