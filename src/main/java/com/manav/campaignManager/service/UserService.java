@@ -1,5 +1,6 @@
 package com.manav.campaignManager.service;
 
+import com.manav.campaignManager.dto.UserDTO;
 import com.manav.campaignManager.exceptionHandler.exceptions.*;
 import com.manav.campaignManager.repository.UserCrud;
 import jakarta.transaction.Transactional;
@@ -47,6 +48,9 @@ public class UserService {
         if( user.getRegistrationTime() == null || user.getRegistrationTime().isEmpty())
             user.setRegistrationTime(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
 
+        if( user.getUserRole() == null || user.getUserRole().isEmpty() )
+            user.setUserRole("viewer");
+
         return true;
     }
 
@@ -54,8 +58,7 @@ public class UserService {
     public User addUser(User newUser) {
         if(!validateUserPayloadForAdd(newUser))
             return null;
-        User updatedUser = userJPA.save(newUser);
-        return updatedUser;
+        return userJPA.save(newUser);
     }
     
     public User findUserById(Integer user_id){
@@ -70,5 +73,17 @@ public class UserService {
             throw new InvalidUserRequest("Please enter a valid Email Id");
         
         return userJPA.findByEmailId( emailId ).orElse(null);
+    }
+
+    public UserDTO convertToDTO(User user) {
+        if( user == null )
+            return null;
+        return UserDTO.builder()
+                .userId( user.getUserId() )
+                .firstName( user.getFirstName() )
+                .lastName( user.getLastName() )
+                .emailId( user.getEmailId() )
+                .userRole( user.getUserRole() )
+                .build();
     }
 }
