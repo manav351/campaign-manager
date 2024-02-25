@@ -18,19 +18,19 @@ public class Email {
     @Column( name = "notification_id")
     private Integer notificationId;
     
-    @Column( name = "sent_time")
+    @Column( name = "sent_time", nullable = false)
     private String sentTime;
     
-    @Column( name = "subject")
+    @Column( name = "subject", nullable = false)
     private String subject;
     
-    @Column( name = "body", columnDefinition = "TEXT")
+    @Column( name = "body", columnDefinition = "TEXT", nullable = false)
     private String body;
 
-    @Column( name = "user_id")
+    @Column( name = "user_id", nullable = false)
     private Integer userId;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "audience_id")
+    @JoinColumn(name = "audience_id", nullable = false)
     private Audience targetAudience;
 }
