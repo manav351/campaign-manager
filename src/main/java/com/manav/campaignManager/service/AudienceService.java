@@ -6,6 +6,8 @@ import com.manav.campaignManager.repository.AudienceCrud;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class AudienceService {
@@ -17,8 +19,8 @@ public class AudienceService {
     }
 
     public Audience findAudienceByEmail( String emailId ){
-        Audience audience = audienceCrud.findAudienceByEmail(emailId);
-        return audience;
+        Optional<Audience> audience = audienceCrud.findAudienceByEmail(emailId);
+        return audience.orElse(null);
     }
 
     public Audience addAudience( Audience audience ){
