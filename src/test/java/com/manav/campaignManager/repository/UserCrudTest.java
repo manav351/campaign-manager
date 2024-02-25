@@ -4,6 +4,7 @@ import com.manav.campaignManager.config.SecurityFilterConfig;
 import com.manav.campaignManager.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -13,7 +14,7 @@ import java.util.Optional;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 
-@SpringBootTest
+@DataJpaTest
 class UserCrudTest {
     private final UserCrud userCrud;
 
@@ -140,7 +141,7 @@ class UserCrudTest {
     void testSaveUserWithManuallySetUserId() {
         // Given
         User user = User.builder()
-                .userId(1)
+                .userId(100)
                 .emailId("testUser6@yopmail.com")
                 .userRole("user")
                 .firstName("Marry")
@@ -152,9 +153,10 @@ class UserCrudTest {
         userCrud.save(user);
 
         // Then
-        assertThat(user.getUserId()).isEqualTo(1);
+        assertThat(user.getUserId()).isNotEqualTo(100);
         Optional<User> userFromDatabase = userCrud.findById(user.getUserId());
         assertThat(userFromDatabase.isPresent()).isTrue();
+        assertThat(userFromDatabase.get()).isEqualTo(user);
     }
 
     // Saving a user with empty emailId field
