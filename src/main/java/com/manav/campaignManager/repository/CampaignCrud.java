@@ -11,6 +11,6 @@ import java.util.List;
 
 @Repository
 public interface CampaignCrud extends CrudRepository<Campaign, Integer> {
-    @Query("SELECT c FROM Campaign c WHERE c.isScheduled = true AND c.status = :status")
-    List<Campaign> findScheduledCampaigns(@Param("status") CampaignStatus status);
+    @Query("SELECT c FROM Campaign c WHERE c.status = :status")
+    List<Campaign> findCampaignsByStatus(@Param("status") CampaignStatus status);
 }
