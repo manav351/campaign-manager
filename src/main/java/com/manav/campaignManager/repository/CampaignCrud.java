@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface campaignCrud extends CrudRepository<Campaign, Integer> {
+public interface CampaignCrud extends CrudRepository<Campaign, Integer> {
     @Query("SELECT c FROM Campaign c WHERE c.isScheduled = true AND c.status = :status")
     List<Campaign> findScheduledCampaigns(@Param("status") CampaignStatus status);
 }
