@@ -1,6 +1,5 @@
 package com.manav.campaignManager.service;
 
-import ch.qos.logback.classic.encoder.JsonEncoder;
 import com.manav.campaignManager.dto.UserDTO;
 import com.manav.campaignManager.exceptionHandler.exceptions.*;
 import com.manav.campaignManager.repository.UserCrud;
@@ -26,7 +25,7 @@ public class UserService {
         return (List<User>) userJPA.findAll();
     }
 
-    private Boolean validateUserPayloadForAdd( User user ){
+    private void validateUserPayloadForAdd( User user ){
         // If user id is present in the request body
         if( user.getUserId() != null && user.getUserId() != 0)
             throw new InvalidUserRequest("User Id should be zero for new email id");
@@ -45,14 +44,11 @@ public class UserService {
         if( existingUser.isPresent() ) {
             throw new UserAlreadyExists("Email Id is already registered to another user");
         }
-
-        return true;
     }
 
     @Transactional
     public User addUser(User newUser) {
-        if(!validateUserPayloadForAdd(newUser))
-            return null;
+        validateUserPayloadForAdd(newUser);
 
         if( newUser.getRegistrationTime() == null || newUser.getRegistrationTime().isEmpty())
             newUser.setRegistrationTime(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
@@ -72,7 +68,7 @@ public class UserService {
         return userJPA.findById(user_id).orElse(null);
     }
     
-    public User findByEmail(String emailId) {
+    public User findUserByEmailId(String emailId) {
         if( emailId == null || emailId.isEmpty())
             throw new InvalidUserRequest("Please enter a valid Email Id");
         
