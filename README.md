@@ -1,4 +1,3 @@
-// README.md
 # Campaign Manager
 ### Introduction
 Welcome to the Campaign Manager project repository! This project is a demonstration of our expertise in Java, Spring Boot, and Hibernate, showcasing our ability to develop a robust and efficient campaign management system. The system includes features for creating and managing campaigns, targeting specific audiences, and tracking campaign performance. Our focus on scalability, security, and user experience makes this project a valuable learning resource for developers and businesses alike. Explore the codebase, contribute, and leverage our expertise to enhance your own projects!
