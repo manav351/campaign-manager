@@ -3,7 +3,7 @@ package com.manav.campaignManager.service;
 import com.manav.campaignManager.entity.*;
 import com.manav.campaignManager.exceptionHandler.exceptions.ErrorWhileTriggeringCampaign;
 import com.manav.campaignManager.exceptionHandler.exceptions.InvalidCampaignPayload;
-import com.manav.campaignManager.repository.campaignCrud;
+import com.manav.campaignManager.repository.CampaignCrud;
 import jakarta.transaction.Transactional;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -11,15 +11,14 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Collections;
 import java.util.List;
 
 @Service
 public class CampaignService {
-    final private campaignCrud campaignJPA;
+    final private CampaignCrud campaignJPA;
     final private EmailService emailService;
     
-    public CampaignService(final campaignCrud campaignJPA, final EmailService emailService) {
+    public CampaignService(final CampaignCrud campaignJPA, final EmailService emailService) {
         this.campaignJPA = campaignJPA;
         this.emailService = emailService;
     }
@@ -106,7 +105,7 @@ public class CampaignService {
     @Transactional
     @Scheduled(fixedRate = 5 * 60 * 1000)
     public void processScheduledCampaigns() {
-        List<Campaign> scheduledCampaigns = campaignJPA.findScheduledCampaigns(CampaignStatus.SCHEDULED);
+        List<Campaign> scheduledCampaigns = campaignJPA.findCampaignsByStatus(CampaignStatus.SCHEDULED);
         LocalDateTime currentTime = LocalDateTime.now();
         
         for (Campaign campaign : scheduledCampaigns) {

@@ -18,7 +18,7 @@ public class Audience {
     @Column(name = "audience_id")
     Integer audienceId;
 
-    @Column(name = "email_id")
+    @Column(name = "email_id", nullable = false, unique = true)
     String emailId;
 
     @Column(name = "first_name")

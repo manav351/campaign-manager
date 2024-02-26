@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collections;
 
 @RestController
-@RequestMapping("/campaign")
+@RequestMapping("/api/campaign")
 public class CampaignController {
     
     final private CampaignService campaignService;

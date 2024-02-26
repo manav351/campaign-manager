@@ -32,7 +32,7 @@ public class Campaign {
     
     @ElementCollection
     @CollectionTable(name = "campaign_target_audience", joinColumns = @JoinColumn(name = "campaign_id"))
-    @Column(name = "target_email")
+    @Column(name = "target_email", nullable = false)
     private List<String> targetAudience;
     
     @Column(nullable = false, name = "scheduled_time")

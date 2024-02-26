@@ -5,7 +5,6 @@ import com.manav.campaignManager.entity.Email;
 import com.manav.campaignManager.exceptionHandler.exceptions.AudienceDoesNotExists;
 import com.manav.campaignManager.exceptionHandler.exceptions.FailedToSendEmail;
 import com.manav.campaignManager.exceptionHandler.exceptions.InvalidEmailRequest;
-import com.manav.campaignManager.repository.AudienceCrud;
 import com.manav.campaignManager.repository.EmailCrud;
 import lombok.AllArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
@@ -60,7 +59,7 @@ public class EmailService {
         return email;
     }
     
-    private Audience validateAndUpdateUserDetails(Email email) {
+    private void validateAndUpdateUserDetails(Email email) {
         if (email == null || email.getTargetAudience() == null) {
             throw new InvalidEmailRequest("No email or target audience data present");
         }
@@ -87,7 +86,6 @@ public class EmailService {
         }
         
         email.setTargetAudience(targetAudience);
-        return targetAudience;
     }
     
     public List<Email> findNotification(Integer notificationId) {
