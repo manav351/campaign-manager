@@ -29,8 +29,8 @@ public class SecurityFilterConfig {
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth ->
                         auth
-                                .requestMatchers("/authenticate").permitAll()
-                                .requestMatchers("/user/add").permitAll()
+                                .requestMatchers("/api/authenticate").permitAll()
+                                .requestMatchers("/api/user/add").permitAll()
                                 .anyRequest().authenticated())
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(point))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
