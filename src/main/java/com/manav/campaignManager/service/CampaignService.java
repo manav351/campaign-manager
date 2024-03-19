@@ -94,7 +94,7 @@ public class CampaignService {
                     .userId(targetCampaign.getCreatedBy().getUserId())
                     .build();
             kafkaService.sendMessage(email);
-            emailService.sendEmail(email);
+//            emailService.sendEmail(email);
             targetCampaign.setSentCount(targetCampaign.getSentCount() + 1 );
         }
         targetCampaign.setStatus(CampaignStatus.SENT);
