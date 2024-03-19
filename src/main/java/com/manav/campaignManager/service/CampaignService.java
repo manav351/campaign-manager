@@ -5,6 +5,7 @@ import com.manav.campaignManager.exceptionHandler.exceptions.ErrorWhileTriggerin
 import com.manav.campaignManager.exceptionHandler.exceptions.InvalidCampaignPayload;
 import com.manav.campaignManager.repository.CampaignCrud;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -14,14 +15,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class CampaignService {
     final private CampaignCrud campaignJPA;
     final private EmailService emailService;
-    
-    public CampaignService(final CampaignCrud campaignJPA, final EmailService emailService) {
-        this.campaignJPA = campaignJPA;
-        this.emailService = emailService;
-    }
+    private KafkaService kafkaService;
     
     public Campaign getCampaign(Integer campaignId) {
         return campaignJPA.findById(campaignId).orElse(null);
@@ -95,6 +93,7 @@ public class CampaignService {
                     .targetAudience(Audience.builder().emailId(recipient).build())
                     .userId(targetCampaign.getCreatedBy().getUserId())
                     .build();
+            kafkaService.sendMessage(email);
             emailService.sendEmail(email);
             targetCampaign.setSentCount(targetCampaign.getSentCount() + 1 );
         }
